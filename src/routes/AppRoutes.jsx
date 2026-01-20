@@ -1,20 +1,22 @@
-import { Routes, Route } from "react-router-dom";
-import Home from "../pages/Home";
-import Categories from "../pages/Categories";
-import Question from "../pages/Question";
-import Login from "../pages/Login";
-import Dashboard from "../pages/Dashboard";
-import Admin from "../pages/Admin";
+import { createBrowserRouter } from "react-router-dom"
+import Home from "../pages/Home"
+// import Categories from "../pages/Categories"
+// import Question from "../pages/Question"
+// import Login from "../pages/Login"
+// import Dashboard from "../pages/Dashboard"
+// import Admin from "../pages/Admin"
+import Layout from "../components/layout/Layout"
 
-export default function AppRoutes() {
-  return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/categories" element={<Categories />} />
-      <Route path="/question/:id" element={<Question />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/admin" element={<Admin />} />
-    </Routes>
-  );
-}
+export const router = createBrowserRouter([
+  {
+    element: <Layout />,
+    children: [
+      { path: "/", element: <Home /> },
+    //   { path: "/categories", element: <Categories /> },
+    //   { path: "/question/:id", element: <Question /> },
+    //   { path: "/login", element: <Login /> },
+    //   { path: "/dashboard", element: <Dashboard /> },
+    //   { path: "/admin", element: <Admin /> },
+    ],
+  },
+])
