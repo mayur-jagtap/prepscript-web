@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center text-center px-4 bg-[#0b0b10] text-white">
+    <section className="min-h-screen flex flex-col items-center justify-center text-center px-4 bg-[var(--background)] text-[var(--foreground)]">
       <div className="fade-in">
         <span className="mb-4 inline-block text-xs font-semibold text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-full">
           Free & Open Learning Platform
@@ -13,7 +13,7 @@ export default function Home() {
           <span className="text-indigo-400">Step by Step</span>
         </h1>
 
-        <p className="mt-4 text-gray-400 max-w-2xl text-lg">
+        <p className="mt-4 text-[var(--muted)] max-w-2xl text-lg">
           Explore interview questions, detailed explanations, and structured
           roadmaps — all for free. Track your progress when you’re ready.
         </p>
@@ -34,7 +34,7 @@ export default function Home() {
           </Link>
         </div>
 
-        <p className="mt-10 text-xs text-gray-500">
+        <p className="mt-10 text-xs text-[var(--muted-2)]">
           No sign-up required to explore content
         </p>
       </div>

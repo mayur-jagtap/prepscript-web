@@ -33,7 +33,7 @@ function Learning() {
         <CategoryCard
           title="System Design"
           subtitle="Crack HLD interviews with structured content"
-          link="/system-design"
+          link="/category/system-design/problems"
           variant="featured"
         />
       </section>

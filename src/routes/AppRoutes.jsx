@@ -1,10 +1,8 @@
 import { createBrowserRouter } from "react-router-dom"
 import Home from "../pages/Home"
 import Learning from "../pages/Learning";
-// import Question from "../pages/Question"
-// import Login from "../pages/Login"
-// import Dashboard from "../pages/Dashboard"
-// import Admin from "../pages/Admin"
+// import CategoryPage from "./pages/CategoryPage";
+import CategoryProblems from "../pages/CategoryProblems";
 import Layout from "../components/layout/Layout"
 
 export const router = createBrowserRouter([
@@ -13,10 +11,8 @@ export const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/learning", element: <Learning /> },
-    //   { path: "/question/:id", element: <Question /> },
-    //   { path: "/login", element: <Login /> },
-    //   { path: "/dashboard", element: <Dashboard /> },
-    //   { path: "/admin", element: <Admin /> },
+      // { path: "/category/:slug", element: <CategoryPage /> },
+      { path: "/category/:slug/problems", element: <CategoryProblems /> },
     ],
   },
 ])

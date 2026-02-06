@@ -1,8 +1,8 @@
 .learning-page {
   min-height: 100vh;
-  background-color: #0b0b10;
+  background-color: var(--background);
   padding: 3rem 1.5rem;
-  color: white;
+  color: var(--foreground);
 }
 
 .learning-hero {
@@ -16,7 +16,7 @@
 }
 
 .learning-hero p {
-  color: #9ca3af;
+  color: var(--muted);
   margin-top: 0.5rem;
 }
 

@@ -8,6 +8,24 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+  <script>
+    // Set theme early to avoid a flash of the wrong theme on first paint.
+    (() => {
+      try {
+        const stored = localStorage.getItem("theme");
+        const preferred =
+          stored ||
+          (window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light");
+        document.documentElement.dataset.theme = preferred;
+      } catch {
+        // no-op
+      }
+    })();
+  </script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>prepscript-web</title>
 </head>
