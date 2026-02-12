@@ -1,0 +1,50 @@
+.problem-detail-page {
+  min-height: 100vh;
+  background: #0b0b10;
+  color: white;
+  padding: 3rem 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.problem-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.difficulty {
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.difficulty.easy {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.difficulty.medium {
+  background: rgba(234, 179, 8, 0.2);
+  color: #eab308;
+}
+
+.difficulty.hard {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.problem-content,
+.problem-code,
+.problem-video {
+  margin-top: 2rem;
+}
+
+.problem-code pre {
+  background: #111827;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+}

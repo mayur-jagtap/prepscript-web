@@ -1,23 +1,51 @@
-import { useMemo, useState } from "react";
-
-const problems = [
-  "What is Network",
-  "Types of Network (LAN, WAN, MAN)",
-  "Hub, Switch, and Router",
-  "Network Topology and its Types",
-  "Nodes and Links",
-];
+import { useEffect, useMemo, useState } from "react";
+import { useParams } from "react-router-dom";
+import { apiGet } from "../lib/api";
+import { Link } from "react-router-dom";
 
 function CategoryProblems() {
-  const [randomIndex, setRandomIndex] = useState(null);
-  const [checked, setChecked] = useState(() =>
-    Array.from({ length: problems.length }, () => false)
-  );
+  const { slug } = useParams();
 
+  const [sections, setSections] = useState([]);
+  const [sectionId, setSectionId] = useState(null);
+  const [problems, setProblems] = useState([]);
+
+  const [randomIndex, setRandomIndex] = useState(null);
+  const [checked, setChecked] = useState([]);
+
+  /* 1️⃣ Load sections */
+  useEffect(() => {
+    apiGet(`/categories/${slug}/sections`)
+      .then((data) => {
+        console.log("Loaded sections:", data);
+        setSections(data);
+        if (data.length > 0) {
+          setSectionId(data[0].id); // default first section
+        }
+      })
+      .catch(console.error);
+  }, [slug]);
+
+  /* 2️⃣ Load problems for selected section */
+  useEffect(() => {
+    if (!sectionId) return;
+
+    apiGet(`/sections/${sectionId}/problems`)
+      .then((data) => {
+        console.log("Loaded problems:", data);
+        setProblems(data);
+        setChecked(Array.from({ length: data.length }, () => false));
+        setRandomIndex(null);
+      })
+      .catch(console.error);
+  }, [sectionId]);
+
+  /* Progress calculations */
   const completedCount = useMemo(
     () => checked.reduce((acc, val) => acc + (val ? 1 : 0), 0),
     [checked]
   );
+
   const totalCount = checked.length;
   const progressPercent =
     totalCount === 0 ? 0 : Math.round((completedCount / totalCount) * 100);
@@ -25,11 +53,10 @@ function CategoryProblems() {
   const visibleProblemIndexes = useMemo(() => {
     if (randomIndex === null) return problems.map((_, i) => i);
     return [randomIndex];
-  }, [randomIndex]);
+  }, [randomIndex, problems]);
 
   return (
     <div className="category-problems-page">
-
       {/* Top Controls */}
       <div className={`top-bar ${randomIndex !== null ? "random-mode" : ""}`}>
         {randomIndex === null && (
@@ -51,12 +78,11 @@ function CategoryProblems() {
             onClick={() => {
               if (problems.length === 0) return;
               const next = Math.floor(Math.random() * problems.length);
-              // Avoid repeating the same pick when possible.
-              const nextIndex =
+              setRandomIndex(
                 problems.length > 1 && next === randomIndex
                   ? (next + 1) % problems.length
-                  : next;
-              setRandomIndex(nextIndex);
+                  : next,
+              );
             }}
           >
             {randomIndex === null ? "Random Problem" : "Another Random"}
@@ -64,33 +90,21 @@ function CategoryProblems() {
         </div>
       </div>
 
+      {/* Progress */}
       {randomIndex === null && (
         <div className="overall-progress">
           <p className="label">Overall Progress</p>
           <h2>{progressPercent}%</h2>
-          <span className="progress-count">
+          <span>
             {completedCount} / {totalCount}
           </span>
-          <div
-            className="progress-track"
-            role="progressbar"
-            aria-label="Overall progress"
-            aria-valuenow={progressPercent}
-            aria-valuemin={0}
-            aria-valuemax={100}
-          >
-            <div
-              className="progress-fill"
-              style={{ width: `${progressPercent}%` }}
-            />
-          </div>
         </div>
       )}
 
       {/* Section */}
       <div className="problem-section">
         <div className="section-header">
-          <h3>Introduction to CN</h3>
+          <h3>{sections[0]?.title ?? "Loading..."}</h3>
           <span>
             {completedCount} / {totalCount}
           </span>
@@ -101,13 +115,13 @@ function CategoryProblems() {
           <div className="table-header">
             <span>Status</span>
             <span>Problem</span>
-            <span>Resource</span>
+            <span>Difficulty</span>
             <span>Note</span>
             <span>Revision</span>
           </div>
 
           {visibleProblemIndexes.map((i) => (
-            <div key={i} className="table-row">
+            <div key={problems[i].id} className="table-row">
               <input
                 type="checkbox"
                 checked={checked[i] ?? false}
@@ -117,15 +131,19 @@ function CategoryProblems() {
                   setChecked(next);
                 }}
               />
-              <span className="problem-title">{problems[i]}</span>
-              <span className="muted">---</span>
+              <Link
+                to={`/problems/${problems[i].id}`}
+                className="problem-title link"
+              >
+                {problems[i].title}
+              </Link>
+              <span className="muted">{problems[i].difficulty}</span>
               <button className="icon-btn">+</button>
               <button className="icon-btn">☆</button>
             </div>
           ))}
         </div>
       </div>
-
     </div>
   );
 }

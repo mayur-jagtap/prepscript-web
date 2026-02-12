@@ -44,6 +44,10 @@
 .category-card.featured {
   border-color: rgba(99, 102, 241, 0.35);
   background: linear-gradient(180deg, var(--surface), rgba(79, 70, 229, 0.14));
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Recommended badge */
